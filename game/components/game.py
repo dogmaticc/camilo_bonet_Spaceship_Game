@@ -20,6 +20,9 @@ class Game:
         self.enemy_manager = EnemyManager()
         self.bullet_manager = BulletManager()
 
+    def shoot_player_bullet(self):
+        self.player.shoot(self.bullet_manager)
+
 
     def run(self):
         # Game loop: events - update - draw
@@ -27,20 +30,33 @@ class Game:
         while self.playing:
             self.events()
             self.update()
+            self.shoot_player_bullet()
             self.draw()
         pygame.display.quit()
         pygame.quit()
 
     def events(self):
+        shoot_event = None  # Mueve la declaración de la variable aquí
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.playing = False
+    
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                shoot_event = event
+    
+        if 'shoot_event' in locals():
+            self.shoot_player_bullet()
+        else:
+            self.shoot_event = None
+
 
     def update(self):
         user_input = pygame.key.get_pressed()
-        self.player.update(user_input)
+        self.player.update(user_input, self.bullet_manager)
         self.enemy_manager.update(self)
         self.bullet_manager.update(self)
+        self.shoot_player_bullet()  
+
 
     def draw(self):
         self.clock.tick(FPS)
@@ -61,3 +77,6 @@ class Game:
             self.screen.blit(image, (self.x_pos_bg, self.y_pos_bg - image_height))
             self.y_pos_bg = 0
         self.y_pos_bg += self.game_speed
+
+    
+
