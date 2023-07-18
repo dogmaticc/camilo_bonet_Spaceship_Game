@@ -14,17 +14,18 @@ class EnemyManager:
     def __init__(self):
         self.enemies = []
 
-    def update(self):
+    def update(self, game):
         self.add_enemy()
+
         for enemy in self.enemies:
-            enemy.update(self.enemies)
+            enemy.update(self.enemies, game)
 
     def draw(self, screen):
         for enemy in self.enemies:
             enemy.draw(screen)
 
     def add_enemy(self):
-        if len(self.enemies) < 2:
+        if len(self.enemies) < 1:
             enemy_data = choice([ENEMY_1, ENEMY_2])
             enemy = Enemy(enemy_data)
             self.enemies.append(enemy)

@@ -2,6 +2,7 @@ import pygame
 from random import randint
 from pygame.sprite import Sprite
 from game.utils.constants import SHIP_WIDTH, SHIP_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+from game.components.bullet.bullet import Bullet
 
 class Enemy(Sprite):
     Y_POS = 20
@@ -20,9 +21,12 @@ class Enemy(Sprite):
         self.movement_x = self.MOV_X[randint(0, 1)]
         self.move_x_for = enemy_data['move_x_for']
         self.step = 0
+        self.type = 'enemy'
+        self.shooting_time = randint(30, 50)
 
-    def update(self, enemies):
+    def update(self, enemies, game):
         self.rect.y += self.speed_y
+        self.shoot(game.bullet_manager)
 
         if self.movement_x == 'left':
             self.rect.x -= self.speed_x
@@ -34,7 +38,15 @@ class Enemy(Sprite):
         if self.rect.y >= SCREEN_HEIGHT:
             enemies.remove(self)
             
-    def draw(self, screen):
+    
+    def shoot(self, bullet_manager):
+        current_time = pygame.time.get_ticks()
+        if self.shooting_time <= current_time:
+            bullet = Bullet(self)
+            bullet_manager.add_bullet(bullet)
+            self.shooting_time += randint(30, 50)
+            
+    def draw(self, screen): 
         screen.blit(self.image, self.rect)
 
     def change_movement_x(self):
@@ -47,9 +59,3 @@ class Enemy(Sprite):
         if (self.step >= self.move_x_for and self.movement_x == 'left') or (self.rect.x <= 10):
             self.movement_x = 'right'
             self.step = 0
-
-
-
-
-
-
