@@ -30,4 +30,13 @@ class EnemyManager:
             enemy = Enemy(enemy_data)
             self.enemies.append(enemy)
 
+    def get_enemy(self):
+        if self.enemies:
+            return self.enemies[0]  
+        return None  
+
+    def remove_enemy(self):
+        if self.enemies:
+            self.enemies.pop(0)
+
 

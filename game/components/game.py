@@ -35,20 +35,10 @@ class Game:
         pygame.display.quit()
         pygame.quit()
 
-    def events(self):
-        shoot_event = None  # Mueve la declaración de la variable aquí
+    def events(self): 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.playing = False
-    
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-                shoot_event = event
-    
-        if 'shoot_event' in locals():
-            self.shoot_player_bullet()
-        else:
-            self.shoot_event = None
-
 
     def update(self):
         user_input = pygame.key.get_pressed()
@@ -56,6 +46,11 @@ class Game:
         self.enemy_manager.update(self)
         self.bullet_manager.update(self)
         self.shoot_player_bullet()  
+
+        for bullet in self.bullet_manager.player_bullets:
+            if bullet.rect.colliderect(self.enemy_manager.get_enemy().rect):
+                self.bullet_manager.player_bullets.remove(bullet)
+                self.enemy_manager.remove_enemy()
 
 
     def draw(self):

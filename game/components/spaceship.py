@@ -31,9 +31,6 @@ class Spaceship(Sprite):
 
         if user_input[pygame.K_DOWN]:
             self.move_down()
-
-        if user_input[pygame.K_SPACE]:
-            self.shoot(bullet_manager)
             
     def move_left(self):
         self.rect.x -= self.SHIP_SPEED
