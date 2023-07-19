@@ -26,6 +26,5 @@ class Bullet(Sprite):
             bullets.remove(self)
 
 
-
     def draw(self, screen):
         screen.blit(self.image, self.rect)

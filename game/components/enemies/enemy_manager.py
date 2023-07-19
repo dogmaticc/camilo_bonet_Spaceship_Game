@@ -35,8 +35,9 @@ class EnemyManager:
             return self.enemies[0]  
         return None  
 
-    def remove_enemy(self):
+    def remove_enemy(self, game):
         if self.enemies:
             self.enemies.pop(0)
+
 
 
