@@ -15,13 +15,16 @@ class Menu:
     def draw(self, screen):
         screen.blit(self.text, self.text_rect)
 
-    def handle_events_on_menu(self, game):
+    def handle_events_on_menu(self, game, high_score):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 game.playing = False
                 game.running = False
             elif event.type == pygame.KEYDOWN:
-                game.run()
+                if event.key == pygame.K_x:
+                    game.score = 0
+                    game.high_score = high_score
+                    game.run()
 
     def reset_screen_color(self, screen):
         screen.fill((255,255,255))
@@ -30,3 +33,8 @@ class Menu:
         self.text = self.font.render(message, True, (0,0,0))
         self.text_rect = self.text.get_rect()
         self.text_rect.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
+
+
+    def update(self, game, high_score):
+        pygame.display.update()
+        self.handle_events_on_menu(game, high_score)

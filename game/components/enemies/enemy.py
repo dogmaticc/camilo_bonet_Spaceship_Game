@@ -15,6 +15,7 @@ class Enemy(Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = randint(0, SCREEN_WIDTH)
         self.rect.y = self.Y_POS
+        self.initial_y = self.rect.y
 
         self.speed_x = enemy_data['speed_x']
         self.speed_y = enemy_data['speed_y']
@@ -59,3 +60,5 @@ class Enemy(Sprite):
         if (self.step >= self.move_x_for and self.movement_x == 'left') or (self.rect.x <= 10):
             self.movement_x = 'right'
             self.step = 0
+    def reset_position(self):
+        self.rect.y = self.initial_y
