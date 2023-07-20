@@ -2,8 +2,8 @@ import pygame
 from game.utils.constants import FONT_STYLE, SCREEN_WIDTH, SCREEN_HEIGHT
 
 class Menu:
-    HALF_SCREEN_WIDTH = SCREEN_WIDTH
-    HALF_SCREEN_HEIGHT = SCREEN_HEIGHT
+    HALF_SCREEN_WIDTH = SCREEN_WIDTH // 2
+    HALF_SCREEN_HEIGHT = SCREEN_HEIGHT // 2
 
     def __init__(self, message, screen):
         screen.fill((255, 255, 255))
@@ -26,8 +26,6 @@ class Menu:
             text_rect = text.get_rect()
             text_rect.center = (x, y)
             screen.blit(text, text_rect)
-
-
 
     def handle_events_on_menu(self, game, high_score):
         for event in pygame.event.get():

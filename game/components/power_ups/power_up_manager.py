@@ -3,7 +3,7 @@ import pygame
 from random import randint
 
 from game.components.power_ups.shield import Shield
-from game.utils.constants import SPACESHIP_SHIELD, DEFAULT_TYPE
+from game.utils.constants import SPACESHIP_SHIELD, DEFAULT_TYPE, STARSHIP_SHIELD
 
 
 class PowerUpManager:
@@ -34,6 +34,15 @@ class PowerUpManager:
                 game.player.set_image((65, 75), SPACESHIP_SHIELD)
                 self.power_ups.remove(power_up)
 
+            if game.coop_player.rect.colliderect(power_up):
+                power_up.start_time = pygame.time.get_ticks()
+                game.coop_player.power_up_type = power_up.type
+                game.coop_player.has_power_up = True
+                game.coop_player.power_time_up = power_up.start_time + (self.duration * 1000)
+                game.coop_player.set_image((65, 75), STARSHIP_SHIELD)
+                self.power_ups.remove(power_up)
+                
+
     def draw(self, screen):
         for power_up in self.power_ups:
             power_up.draw(screen)
@@ -49,6 +58,17 @@ class PowerUpManager:
                 self.player.has_power_up = False
                 self.player.power_up_type = DEFAULT_TYPE
                 self.player.set_image()
+
+        if self.coop_player.has_power_up:
+            time_to_show = round((self.coop_player.power_time_up - pygame.time.get_ticks()) / 1000, 2)
+
+            if time_to_show >= 0:
+                message = f"{self.coop_player.power_up_type} is enabled for {time_to_show} seconds"
+                self.menu.draw(self.coop_player, message, 540, 50, (255, 255, 255))
+            else:
+                self.coop_player.has_power_up = False
+                self.coop_player.power_up_type = DEFAULT_TYPE
+                self.coop_player.set_image()
 
     def reset(self):
         now = pygame.time.get_ticks()

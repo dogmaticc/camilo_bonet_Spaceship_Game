@@ -15,7 +15,6 @@ class Bullet(Sprite):
         self.rect.center = spaceship.rect.center
         self.owner = spaceship.type
 
-
     def update(self, bullets):
         if self.owner == 'player':
             self.rect.y -= self.SPEED  

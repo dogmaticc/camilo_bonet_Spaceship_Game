@@ -4,11 +4,11 @@ from game.utils.constants import ENEMY_1, ENEMY_2
 
 class EnemyManager:
     ENEMY_1['speed_x'] = 5
-    ENEMY_1['speed_y'] = 1
+    ENEMY_1['speed_y'] = 0.5
     ENEMY_1['move_x_for'] = 90
 
-    ENEMY_2['speed_x'] = 7
-    ENEMY_2['speed_y'] = 2
+    ENEMY_2['speed_x'] = 10
+    ENEMY_2['speed_y'] = 1
     ENEMY_2['move_x_for'] = 40
 
     def __init__(self):

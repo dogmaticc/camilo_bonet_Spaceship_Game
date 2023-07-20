@@ -60,5 +60,6 @@ class Enemy(Sprite):
         if (self.step >= self.move_x_for and self.movement_x == 'left') or (self.rect.x <= 10):
             self.movement_x = 'right'
             self.step = 0
+            
     def reset_position(self):
         self.rect.y = self.initial_y
